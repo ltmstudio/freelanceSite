@@ -1,0 +1,24 @@
+@font-face {
+    font-family: 'Oakes-Light';
+    src: url('/public/assets/fonts/Oakes-Grotesk/oakes-grotesk-light.ttf');
+}
+@font-face {
+    font-family: 'Oakes-Regular';
+    src: url('/public/assets/fonts/Oakes-Grotesk/oakes-grotesk-regular.ttf');
+}
+@font-face {
+    font-family: 'Oakes-Bold';
+    src: url('/public/assets/fonts/Oakes-Grotesk/oakes-grotesk-bold.ttf');
+}
+
+$main-font: 'Oakes-Regular';
+$light-font: 'Oakes-Light';
+$bold-font: 'Oakes-Bold';
+
+
+$big-text: 130px;
+$font-p: 2rem;
+$font-m-p: clamp(3rem, 0rem + 3.3333vw, 5rem);
+$content-p: clamp(1rem, -0.05rem + 1.1667vw, 1.7rem);
+$mini-p: 1.4rem;
+$sub-p: 1.2rem;

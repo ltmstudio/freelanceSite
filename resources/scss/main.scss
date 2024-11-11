@@ -1,0 +1,959 @@
+@import "__fonts";
+@import "__variables";
+@import "__base";
+
+.main-content {
+    position: relative;
+}
+
+.header {
+    position: sticky;
+    top: $padding-16;
+    width: 98%;
+    padding: 0 $padding-16;
+    margin-bottom: -100px;
+    z-index: 99999;
+    .navbar {
+        background-color: $bg-color;
+        padding: $padding-16 $spacing-24;
+        border-radius: $border-radius;
+        .logo {
+            width: $logo-w;
+            height: $logo-h;
+            margin-right: $margin-2;
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+            }
+        }
+        .nav-links {
+            .nav-item {
+                font-size: $sub-p;
+                font-family: $light-font;
+                padding: $margin-1 $margin-2;
+                transition: all 0.3s ease;
+            }
+        }
+        &.hidden {
+            .nav-links {
+                transform: translateX(-100%); // Скрыть навигацию при сворачивании
+                opacity: 0; // Уменьшаем непрозрачность
+            }
+        }
+    }
+    .get-in-touch {
+        cursor: pointer;
+        right: $padding-16;
+        background-color: $black;
+        border-radius: 100px;
+        outline: none;
+        border: none;
+        font-size: $font-p;
+        font-family: $light-font;
+        color: $bg-color;
+        padding: $padding-16 $margin-2;
+        transition: all 0.4s ease-in-out;
+        &:hover {
+            background-color: $bg-color;
+            color: $black;
+        }
+    }
+}
+
+.bg-wrapper {
+    // position: relative;
+    background-image: url("/public/assets/images/gray-bg.jpg");
+    width: 100%;
+    height: 80vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    &.second-wrapper {
+        margin-top: -10px;
+        z-index: -1;
+        height: 90vh;
+        .normal-title {
+            margin-bottom: $big-space;
+            width: 60%;
+        }
+    }
+    &.third-wrapper {
+        height: 130vh;
+        padding-top: $big-text;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .text {
+        opacity: 0; /* Начальное значение прозрачности */
+        transform: translateY(20px); /* Подъем снизу */
+        transition:
+            opacity 0.7s ease,
+            transform 0.7s ease; /* Плавный переход */
+        &.visible {
+            opacity: 1; /* Конечное значение прозрачности */
+            transform: translateY(0); /* Возвращаем к исходному положению */
+        }
+    }
+    .white-bg-text {
+        background-color: $bg-color;
+        border-radius: $border-radius;
+        padding: $padding-16 $padding-48;
+        font-size: $font-p;
+    }
+}
+
+.big-title {
+    font-size: $big-text;
+    margin: $margin-1;
+}
+
+.light-text {
+    font-size: $font-m-p;
+    font-family: $light-font;
+}
+
+.normal-title {
+    font-size: $font-m-p;
+}
+
+.white-bg {
+    background-color: $bg-color;
+    // margin: $margin-3 auto;
+    padding: $margin-3 0;
+    box-shadow: $bx-sh;
+}
+
+.slider {
+    position: relative;
+    width: 60%;
+    overflow: hidden;
+    &.specs {
+        width: 80%;
+    }
+    &.portfolio {
+        height: 30vh;
+        // Мягкий эффект по краям
+        &::before,
+        &::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            width: 50px; // Настройте ширину размытия
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        &::before {
+            left: 0;
+            background: linear-gradient(to right, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0));
+            z-index: 2;
+        }
+
+        &::after {
+            right: 0;
+            background: linear-gradient(to left, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0));
+        }
+    }
+    &.reviews {
+        width: 58%;
+        height: 50vh;
+        .reviews-swiper {
+            height: 90%;
+        }
+        .swiper-pagination {
+            display: flex;
+            padding: 10px 0;
+            .swiper-pagination-bullet {
+                width: 2rem; // Ширина полоски
+                height: 3px; // Высота полоски
+                background: rgba(0, 0, 0, 0.8); // Цвет для неактивных
+                border-radius: 0; // Скругление углов
+                margin: 0 4px; // Отступы между полосками
+                transition: background 0.3s ease; // Плавный переход цвета
+
+                &.swiper-pagination-bullet-active {
+                    background: black; // Цвет для активной полоски
+                    height: 3px; // Высота полоски
+                }
+            }
+        }
+    }
+    .swiper-slide {
+        transition:
+            opacity 0.5s ease,
+            transform 0.5s ease; /* Увеличение времени перехода */
+        opacity: 1; /* Изначально непрозрачные */
+    }
+
+    .swiper-container {
+        height: 100%;
+    }
+
+    .card-swiper {
+        height: auto;
+        margin-bottom: $margin-1;
+    }
+
+    .swiper-container-free-mode > .swiper-wrapper,
+    .card-swiper > .swiper-wrapper {
+        transition-timing-function: linear;
+    }
+
+    .swiper-slide {
+        width: 80%;
+        height: auto;
+        overflow: hidden;
+        background-position: center center;
+        background-size: cover;
+    }
+}
+
+.hidden {
+    opacity: 0;
+    transform: translateY(10px);
+    transition:
+        opacity 0.5s ease,
+        transform 0.5s ease;
+}
+
+.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.spec-card {
+    background-color: $bg-color;
+    border-radius: $border-radius;
+    padding: $padding-16;
+    font-size: $mini-p;
+    font-family: $light-font;
+    text-align: center;
+}
+
+.review-card {
+    height: 90%;
+    background-color: $gray;
+    border-radius: $border-radius;
+    padding: $spacing-24;
+    .quote-icon {
+        width: 26px;
+        height: auto;
+        object-fit: cover;
+    }
+    .desc {
+        p {
+            font-size: $content-p;
+            font-family: $light-font;
+        }
+    }
+    .author {
+        .photo {
+            width: 75px;
+            height: 75px;
+            margin-right: $padding-16;
+            border-radius: $border-radius;
+            background-color: rgb(255, 204, 192);
+        }
+        .author-name {
+            font-family: $bold-font;
+            font-size: $mini-p;
+            margin-bottom: $margin-05;
+        }
+        .author-spec {
+            font-family: $light-font;
+            font-size: $sub-p;
+        }
+    }
+}
+
+.card-row {
+    margin-top: $margin-4;
+    width: 100%;
+    height: 50vh;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    .card {
+        background-color: $bg-color;
+        border-radius: $border-radius;
+        width: 24.6%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        transition:
+            transform 0.3s ease,
+            background-color 0.3s ease; // Плавный переход
+
+        &:hover {
+            .card-title {
+                font-size: $margin-2; // Уменьшаем размер шрифта
+                transform: translateY(-80px); // Поднимаем заголовок
+                // transition:
+                //     transform 0.3s ease,
+                //     font-size 0.3s ease; // Плавный переход
+            }
+
+            .for-ben {
+                display: block; // Показываем текст
+                opacity: 1; // Устанавливаем непрозрачность
+                transition: all 0.2s ease; // Плавный переход для непрозрачности
+            }
+        }
+
+        .card-title {
+            font-size: $margin-3;
+            transition: all 0.3s ease-in-out; // Плавный переход для заголовка
+        }
+
+        .for-ben {
+            width: 65%;
+            text-align: center;
+            font-family: $light-font;
+            font-size: $font-p;
+            opacity: 0; // Устанавливаем непрозрачность
+            transition: opacity 0.3s ease; // Плавный переход для непрозрачности
+        }
+    }
+}
+
+.footer {
+    background-color: rgba($color: $bg-color, $alpha: 0.7);
+    padding: $margin-4 $padding-48;
+    border-top-left-radius: $border-radius;
+    border-top-right-radius: $border-radius;
+    .first-col {
+        .normal-title {
+            margin-bottom: $margin-2;
+        }
+        .white-bg-text {
+            background-color: unset;
+            padding: unset;
+            margin-bottom: $margin-6;
+        }
+        .contact-item {
+            .title {
+                color: rgba($color: $black, $alpha: 0.6);
+                margin-bottom: $margin-1;
+            }
+            .desc {
+                font-size: $font-p;
+                font-family: $light-font;
+            }
+        }
+    }
+    .second-col {
+        width: 30%;
+        .office-photo {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            img {
+                border-radius: $border-radius;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+            .contact-us {
+                cursor: pointer;
+                position: absolute;
+                bottom: $padding-48;
+                left: $padding-48;
+                outline: none;
+                border-radius: 100px;
+                color: $bg-color;
+                background-color: transparent;
+                border: 1px solid $bg-color;
+                font-size: $font-p;
+                padding: $padding-16 $margin-2;
+                transition: all 0.4s ease-in-out;
+                &:hover {
+                    background-color: $bg-color;
+                    color: $black;
+                }
+            }
+        }
+    }
+}
+
+/* Оверлей (затемнение) */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный черный */
+    opacity: 0;
+    visibility: hidden;
+    z-index: 99999; /* Задаем высокий индекс, чтобы оверлей был выше всего */
+    transition: opacity 0.4s ease;
+}
+
+/* Модальное окно */
+.modal {
+    width: 80%;
+    height: 80vh;
+    background-color: $bg-color;
+    margin: auto;
+    padding: $margin-4 $big-text;
+    border-radius: 10px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0; /* Изначально скрыто */
+    visibility: hidden; /* Скрываем */
+    z-index: -1; /* Оно не будет видимым */
+
+    /* Применение анимаций при открытии */
+    &.open {
+        opacity: 1;
+        visibility: visible; /* Делаем его видимым */
+        z-index: 999999999; /* Повыше всех элементов */
+        animation:
+            fadeIn 1s ease-out,
+            slideIn 0.8s ease-in-out;
+    }
+
+    /* Анимация скрытия модального окна */
+    &.closing {
+        animation:
+            fadeOut 1s ease-out,
+            slideOut 0.8s ease-in-out;
+    }
+
+    .modal-content {
+        .modal-name {
+            font-size: $mini-p;
+            color: rgba($color: $black, $alpha: 0.4);
+            font-family: $light-font;
+            margin-bottom: $margin-2;
+        }
+        .modal-title {
+            font-size: $font-m-p;
+            line-height: 1.1em;
+            margin-bottom: $margin-2;
+        }
+        .modal-subtitle {
+            font-size: $sub-p;
+            font-family: $light-font;
+            margin-bottom: $margin-2;
+        }
+        .form-wrapper {
+            height: 40vh;
+            margin-bottom: $margin-2;
+        }
+        .submit-btn {
+            cursor: pointer;
+            background-color: $black;
+            border-radius: $border-radius;
+            outline: none;
+            border: none;
+            font-size: $sub-p;
+            color: $bg-color;
+            font-family: $light-font;
+            padding: $padding-12 $padding-24;
+            transition: all 0.3s ease;
+            &:hover {
+                background-color: $bg-color;
+                color: $black;
+            }
+        }
+    }
+}
+
+/* Анимация скольжения окна снизу при открытии */
+@keyframes slideIn {
+    0% {
+        transform: translate(-50%, 50%);
+        opacity: 0;
+    }
+    100% {
+        transform: translate(-50%, -50%);
+        opacity: 1;
+    }
+}
+
+/* Анимация появления */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Анимация скольжения окна вниз при закрытии */
+@keyframes slideOut {
+    0% {
+        transform: translate(-50%, -50%);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, 50%);
+        opacity: 0;
+    }
+}
+
+/* Анимация исчезновения при закрытии */
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.close-btn {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $dark-gray;
+    color: $black;
+    font-size: $font-p;
+    border-radius: 50%;
+    width: $margin-4;
+    height: $margin-4;
+    span {
+        display: inline-block;
+        transition: transform 0.4s ease; /* Плавное вращение */
+    }
+
+    &:hover span {
+        transform: rotate(90deg); /* Вращение по часовой стрелке при наведении */
+    }
+
+    &:not(:hover) span {
+        transform: rotate(-90deg); /* Вращение против часовой стрелки при убирании курсора */
+    }
+}
+
+.form-row {
+    width: 53%;
+    .input-row {
+        width: 48%;
+        input {
+            width: -webkit-fill-available;
+        }
+    }
+    label {
+        font-size: $sub-p;
+        margin-bottom: $margin-05;
+    }
+    input {
+        margin-bottom: $margin-2;
+        border: none;
+        outline: none;
+        background-color: $dark-gray;
+        padding: $margin-1;
+    }
+    textarea {
+        border: none;
+        outline: none;
+        background-color: $dark-gray;
+        padding: $margin-1;
+    }
+}
+
+.photo {
+    width: 42%;
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+.desktop-none {
+    display: none;
+}
+
+@media (max-width: 991px) {
+    .mobile-column {
+        flex-direction: column;
+    }
+
+    .mobile-none {
+        display: none;
+    }
+
+    .desktop-none {
+        display: unset;
+    }
+
+    .big-title {
+        font-size: 100px;
+        text-align: center;
+    }
+
+    .slider {
+        width: 100%;
+        margin-top: $margin-4;
+        &.specs {
+            width: 100%;
+            margin-top: 0;
+            .spec-card {
+                font-size: 1.1rem;
+            }
+        }
+        &.reviews {
+            width: 100%;
+        }
+    }
+
+    .bg-wrapper {
+        height: 80vh;
+        &.second-wrapper {
+            height: 80vh;
+            .normal-title {
+                width: 100%;
+            }
+        }
+        .white-bg-text {
+            font-size: 1.5rem;
+        }
+    }
+
+    .card-row {
+        .card {
+            width: 100%;
+        }
+    }
+
+    .header {
+        padding: 0;
+        width: 95%;
+        margin-left: auto;
+        margin-right: auto;
+        .navbar {
+            .logo {
+                margin-right: 0;
+            }
+        }
+        .get-in-touch {
+            font-size: $mini-p;
+            border-radius: $border-radius;
+        }
+    }
+
+    .mobile-menu-wrapper {
+        position: relative;
+
+        .menu-button {
+            background-color: #fff;
+            border: none;
+            border-radius: 50px;
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden; // Скрыть часть кнопки при изменении размера
+            transition: all 0.4s ease;
+
+            &::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 50%;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.1); // Цвет подложки
+                border-radius: 50px;
+                transform: translate(-50%, -100%) scale(0); // Начальное положение
+                transition: transform 0.4s ease;
+                z-index: 0;
+            }
+
+            &:hover {
+                background-color: #f0f0f0; // Цвет при наведении
+            }
+
+            &:active {
+                transform: scale(1.1); // Увеличение при нажатии
+            }
+
+            &:active::before {
+                transform: translate(-50%, -100%) scale(1); // Анимация разрастания фона
+            }
+        }
+
+        .mobile-menu {
+            display: none; // Скрываем меню по умолчанию
+            opacity: 0; // Начальная прозрачность
+            position: absolute; // Размещаем меню относительно кнопки
+            top: 100%; // Скрываем ниже кнопки
+            left: 50%;
+            transform: translateX(-50%); // Центрируем по горизонтали
+            transition: opacity 0.4s ease;
+
+            &.visible {
+                display: block; // Показываем меню
+                opacity: 1; // Плавное появление
+            }
+
+            ul {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+
+                li {
+                    padding: 10px 0; // Отступы для пунктов меню
+
+                    a {
+                        text-decoration: none;
+                        color: #000;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 2500px) and (min-width: 1440px) {
+    .header {
+        .get-in-touch {
+            font-size: 1.6rem;
+        }
+    }
+
+    .card-row {
+        height: 40vh;
+        .card {
+            .card-title {
+                font-size: 2.2rem;
+            }
+            .for-ben {
+                font-size: 1.2rem;
+            }
+        }
+    }
+}
+
+@media (max-width: 1439px) and (min-width: 1024px){
+    .bg-wrapper{
+        &.third-wrapper{
+            height: 100%;
+        }
+    }
+    .header{
+        .navbar{
+            .nav-links{
+                .nav-item{
+                    font-size: 1.2rem;
+                }
+            }
+        }
+        .get-in-touch{
+            font-size: 1.2rem;
+        }
+    }
+    .spec-card{
+        font-size: 0.9rem;
+    }
+
+    .card-row{
+        height: 35vh;
+        margin-bottom: $margin-5;
+        .card{
+            .card-title{
+                font-size: 2rem;
+            }
+            .for-ben{
+                font-size: 1rem;
+            }
+        }
+    }
+}
+
+@media (max-width: 1024px) and (min-width: 768px) {
+    .bg-wrapper {
+        &.third-wrapper {
+            height: 100%;
+        }
+    }
+
+    .photo {
+        display: none;
+    }
+
+    .modal {
+        height: 90vh;
+        .modal-content {
+            .form-wrapper {
+                height: unset;
+            }
+            .modal-title {
+                font-size: 2.2rem;
+            }
+        }
+    }
+    .form-row {
+        width: 100%;
+    }
+
+    .card-row {
+        height: 100%;
+        margin-bottom: $margin-3;
+        .card {
+            width: 49%;
+            height: 35vh;
+            margin-bottom: $padding-12;
+            .card-title {
+                font-size: 2.2rem;
+            }
+            .for-ben {
+                font-size: $mini-p;
+            }
+        }
+    }
+
+    .review-card{
+        .author{
+            .author-name{
+                font-size: $margin-1;
+            }
+            .author-spec{
+                font-size: $padding-12;
+            }
+            .photo{
+                width: 55px;
+                height: 55px;
+                display: block;
+            }
+        }
+    }
+
+    .footer{
+        .first-col{
+            .contact-item{
+                margin-bottom: $margin-1;
+                .title{
+                    margin-bottom: $margin-05;
+                }
+            }
+        }
+        .second-col{
+            display: none;
+        }
+    }
+}
+
+
+@media (max-width: 767px) and (min-width: 375px){
+    .bg-wrapper{
+        height: 60vh;
+        .white-bg-text{
+            font-size: 1.1rem;
+        }
+        &.second-wrapper{
+            height: 60vh;
+            .normal-title{
+                margin-bottom: $margin-4;
+            }
+        }
+        &.third-wrapper{
+            height: 100%;
+        }
+    }
+
+    .normal-title{
+        font-size: clamp(2.4rem, 0rem + 3.3333vw, 5rem);
+    }
+
+    .header{
+        .navbar{
+            .logo{
+                width: 50px;
+                height: 25px;
+            }
+        }
+        .get-in-touch{
+            font-size: $margin-1;
+            padding: $padding-16 $margin-1;
+        }
+    }
+
+    .big-title{
+        font-size: 70px;
+    }
+
+    .slider{
+        &.specs{
+            .spec-card{
+                font-size: 0.6rem;
+            }
+        }
+    }
+
+    .card-row{
+        height: 100%;
+        .card{
+            margin-bottom: $margin-1;
+            height: 30vh;
+            .card-title{
+                font-size: $margin-2;
+            }
+            .for-ben{
+                font-size: $margin-1;
+            }
+        }
+    }
+
+    .footer{
+        .first-col{
+            .contact-item{
+                margin-bottom: $margin-1;
+                .title{
+                    margin-bottom: $margin-05;
+                }
+            }
+        }
+        .second-col{
+            display: none;
+        }
+    }
+
+
+    .photo {
+        display: none;
+    }
+
+    .modal {
+        height: 90vh;
+        .modal-content {
+            .form-wrapper {
+                height: unset;
+            }
+            .modal-title {
+                font-size: 2.2rem;
+            }
+        }
+    }
+    .form-row {
+        width: 100%;
+    }
+
+    .review-card{
+        .author{
+            .author-name{
+                font-size: $margin-1;
+            }
+            .author-spec{
+                font-size: $padding-12;
+            }
+            .photo{
+                width: 55px;
+                height: 55px;
+                display: block;
+            }
+        }
+    }
+}
