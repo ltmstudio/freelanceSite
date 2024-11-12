@@ -98,7 +98,8 @@
     .white-bg-text {
         background-color: $bg-color;
         border-radius: $border-radius;
-        padding: $padding-16 $padding-48;
+        padding: $padding-16;
+        text-align: center;
         font-size: $font-p;
     }
 }
@@ -205,7 +206,8 @@
         width: 80%;
         height: auto;
         overflow: hidden;
-        background-position: center center;
+        background-position: bottom center;
+        background-repeat: no-repeat;
         background-size: cover;
     }
 }
@@ -249,13 +251,6 @@
         }
     }
     .author {
-        .photo {
-            width: 75px;
-            height: 75px;
-            margin-right: $padding-16;
-            border-radius: $border-radius;
-            background-color: rgb(255, 204, 192);
-        }
         .author-name {
             font-family: $bold-font;
             font-size: $mini-p;
@@ -264,6 +259,17 @@
         .author-spec {
             font-family: $light-font;
             font-size: $sub-p;
+        }
+    }
+    .photo {
+        width: 75px;
+        height: 75px;
+        margin-right: $padding-16;
+        img{
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border-radius: $border-radius;
         }
     }
 }
@@ -643,74 +649,108 @@
             border-radius: $border-radius;
         }
     }
-
     .mobile-menu-wrapper {
-        position: relative;
+        position: absolute;
+        top: 0; // Отступ сверху (регулируется по вашему дизайну)
+        left: 50%;
+        transform: translateX(-50%);
+        overflow: hidden;
+        width: 54px;
+        height: 54px;
+        background-color: $bg-color;
+        transition:
+            width 0.5s ease,
+            height 0.5s ease;
+        border-radius: $border-radius;
+        transform-origin: top;
+
+        &.expanded {
+            width: 95vw;
+            height: 45vh;
+        }
 
         .menu-button {
-            background-color: #fff;
+            position: absolute; // Кнопка остаётся на месте
+            top: 0; // Сверху контейнера
+            left: 50%; // Центрирование по горизонтали
+            transform: translateX(-50%); // Центрирование по горизонтали
+            z-index: 2; // Кнопка выше меню
+            width: 54px; // Ширина кнопки остаётся фиксированной
+            height: 54px; // Высота кнопки остаётся фиксированной
+            background-color: transparent;
             border: none;
-            border-radius: 50px;
-            padding: 10px 20px;
-            font-size: 1.2rem;
             cursor: pointer;
-            position: relative;
-            overflow: hidden; // Скрыть часть кнопки при изменении размера
-            transition: all 0.4s ease;
+            border-radius: $border-radius;
+            margin-left: 10px;
+            .menu-toggle {
+                display: none; // Скрываем чекбокс
+                &:checked {
+                    .menu-icon {
+                        span:nth-child(1) {
+                            transform: rotate(45deg) translate(5px, 5px);
+                        }
 
-            &::before {
-                content: "";
-                position: absolute;
-                top: 0;
-                left: 50%;
-                width: 100%;
-                height: 100%;
-                background-color: rgba(0, 0, 0, 0.1); // Цвет подложки
-                border-radius: 50px;
-                transform: translate(-50%, -100%) scale(0); // Начальное положение
-                transition: transform 0.4s ease;
-                z-index: 0;
+                        span:nth-child(2) {
+                            opacity: 0;
+                        }
+
+                        span:nth-child(3) {
+                            transform: rotate(-45deg) translate(5px, -5px);
+                        }
+                    }
+                }
             }
+            .menu-icon {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                width: 30px;
+                height: 20px;
+                cursor: pointer;
+                z-index: 2; // Поверх меню
 
-            &:hover {
-                background-color: #f0f0f0; // Цвет при наведении
-            }
-
-            &:active {
-                transform: scale(1.1); // Увеличение при нажатии
-            }
-
-            &:active::before {
-                transform: translate(-50%, -100%) scale(1); // Анимация разрастания фона
+                span {
+                    display: block;
+                    height: 3px;
+                    background-color: #000;
+                    transition:
+                        transform 0.3s ease,
+                        opacity 0.3s ease;
+                }
             }
         }
 
         .mobile-menu {
-            display: none; // Скрываем меню по умолчанию
-            opacity: 0; // Начальная прозрачность
-            position: absolute; // Размещаем меню относительно кнопки
-            top: 100%; // Скрываем ниже кнопки
-            left: 50%;
-            transform: translateX(-50%); // Центрируем по горизонтали
-            transition: opacity 0.4s ease;
+            position: absolute;
+            top: 60px; // Начинается сразу под кнопкой
+            left: 0;
+            width: 100%;
+            background-color: $bg-color;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            z-index: -1;
+            transition:
+                opacity 0.5s ease,
+                z-index 0s 0.5s;
 
             &.visible {
-                display: block; // Показываем меню
-                opacity: 1; // Плавное появление
+                opacity: 1;
+                z-index: 1;
+                transition:
+                    opacity 0.5s ease,
+                    z-index 0s;
             }
 
-            ul {
+            .menu-links {
                 list-style: none;
                 padding: 0;
                 margin: 0;
-
-                li {
-                    padding: 10px 0; // Отступы для пунктов меню
-
-                    a {
-                        text-decoration: none;
-                        color: #000;
-                    }
+                text-align: center;
+                .nav-item {
+                    font-size: $font-p;
+                    margin: 30px 0;
                 }
             }
         }
@@ -737,36 +777,36 @@
     }
 }
 
-@media (max-width: 1439px) and (min-width: 1024px){
-    .bg-wrapper{
-        &.third-wrapper{
+@media (max-width: 1439px) and (min-width: 1024px) {
+    .bg-wrapper {
+        &.third-wrapper {
             height: 100%;
         }
     }
-    .header{
-        .navbar{
-            .nav-links{
-                .nav-item{
+    .header {
+        .navbar {
+            .nav-links {
+                .nav-item {
                     font-size: 1.2rem;
                 }
             }
         }
-        .get-in-touch{
+        .get-in-touch {
             font-size: 1.2rem;
         }
     }
-    .spec-card{
+    .spec-card {
         font-size: 0.9rem;
     }
 
-    .card-row{
+    .card-row {
         height: 35vh;
         margin-bottom: $margin-5;
-        .card{
-            .card-title{
+        .card {
+            .card-title {
                 font-size: 2rem;
             }
-            .for-ben{
+            .for-ben {
                 font-size: 1rem;
             }
         }
@@ -815,15 +855,18 @@
         }
     }
 
-    .review-card{
-        .author{
-            .author-name{
+    .review-card {
+        .photo{
+            display: block;
+        }
+        .author {
+            .author-name {
                 font-size: $margin-1;
             }
-            .author-spec{
+            .author-spec {
                 font-size: $padding-12;
             }
-            .photo{
+            .photo {
                 width: 55px;
                 height: 55px;
                 display: block;
@@ -831,96 +874,94 @@
         }
     }
 
-    .footer{
-        .first-col{
-            .contact-item{
+    .footer {
+        .first-col {
+            .contact-item {
                 margin-bottom: $margin-1;
-                .title{
+                .title {
                     margin-bottom: $margin-05;
                 }
             }
         }
-        .second-col{
+        .second-col {
             display: none;
         }
     }
 }
 
-
-@media (max-width: 767px) and (min-width: 375px){
-    .bg-wrapper{
+@media (max-width: 767px) and (min-width: 375px) {
+    .bg-wrapper {
         height: 60vh;
-        .white-bg-text{
+        .white-bg-text {
             font-size: 1.1rem;
         }
-        &.second-wrapper{
+        &.second-wrapper {
             height: 60vh;
-            .normal-title{
+            .normal-title {
                 margin-bottom: $margin-4;
             }
         }
-        &.third-wrapper{
+        &.third-wrapper {
             height: 100%;
         }
     }
 
-    .normal-title{
+    .normal-title {
         font-size: clamp(2.4rem, 0rem + 3.3333vw, 5rem);
     }
 
-    .header{
-        .navbar{
-            .logo{
+    .header {
+        .navbar {
+            .logo {
                 width: 50px;
                 height: 25px;
             }
         }
-        .get-in-touch{
+        .get-in-touch {
             font-size: $margin-1;
             padding: $padding-16 $margin-1;
         }
     }
 
-    .big-title{
+    .big-title {
         font-size: 70px;
     }
 
-    .slider{
-        &.specs{
-            .spec-card{
+    .slider {
+        &.specs {
+            .spec-card {
                 font-size: 0.6rem;
             }
         }
     }
 
-    .card-row{
+    .card-row {
         height: 100%;
-        .card{
+        .card {
             margin-bottom: $margin-1;
             height: 30vh;
-            .card-title{
+            .card-title {
                 font-size: $margin-2;
             }
-            .for-ben{
+            .for-ben {
                 font-size: $margin-1;
             }
         }
     }
 
-    .footer{
-        .first-col{
-            .contact-item{
+    .footer {
+        .first-col {
+            .contact-item {
                 margin-bottom: $margin-1;
-                .title{
+                .title {
                     margin-bottom: $margin-05;
                 }
             }
         }
-        .second-col{
+        .second-col {
             display: none;
         }
     }
-
 
     .photo {
         display: none;
@@ -941,19 +982,53 @@
         width: 100%;
     }
 
-    .review-card{
-        .author{
-            .author-name{
+    .review-card {
+        .author {
+            .author-name {
                 font-size: $margin-1;
             }
-            .author-spec{
+            .author-spec {
                 font-size: $padding-12;
             }
-            .photo{
+            .photo {
                 width: 55px;
                 height: 55px;
                 display: block;
             }
         }
+    }
+}
+
+@media (max-width: 474px) and (min-width: 320px) {
+    .big-title {
+        font-size: 60px;
+    }
+
+    .normal-title {
+        font-size: clamp(2rem, 0rem + 3.3333vw, 5rem);
+    }
+
+    .bg-wrapper {
+        .white-bg-text {
+            font-size: 0.9rem;
+            width: fit-content;
+            margin: auto;
+        }
+    }
+
+    .modal {
+        .modal-content {
+            .modal-name {
+                font-size: 1.2rem;
+            }
+            .modal-title {
+                font-size: 2rem;
+            }
+        }
+    }
+
+    .close-btn {
+        width: $margin-3;
+        height: $margin-3;
     }
 }

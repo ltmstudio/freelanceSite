@@ -1,3 +1,36 @@
+document.addEventListener('DOMContentLoaded', () => {
+    const menuToggle = document.getElementById('menuToggle');
+    const wrapper = document.querySelector('.mobile-menu-wrapper');
+    const menu = document.getElementById('mobileMenu');
+    const navItems = document.querySelectorAll('.nav-item a'); // Все ссылки в меню
+
+    // Обработчик для чекбокса меню
+    if (menuToggle) {
+        menuToggle.addEventListener('change', function() {
+            if (menuToggle.checked) {
+                wrapper.classList.add('expanded');
+                menu.classList.add('visible');
+            } else {
+                wrapper.classList.remove('expanded');
+                menu.classList.remove('visible');
+            }
+        });
+    }
+
+    // Обработчик для всех ссылок меню
+    navItems.forEach(item => {
+        item.addEventListener('click', () => {
+            if (menuToggle.checked) {
+                menuToggle.checked = false; // Снимаем отметку с чекбокса
+                wrapper.classList.remove('expanded');
+                menu.classList.remove('visible');
+            }
+        });
+    });
+});
+
+
+
 // Получаем элементы модального окна и кнопок для открытия
 const modal = document.getElementById('modal');
 const modalOverlay = document.getElementById('modalOverlay');
@@ -5,79 +38,51 @@ const openModalBtns = document.querySelectorAll('.open-modal-btn'); // Все к
 const closeModalBtn = document.getElementById('closeModalBtn');
 
 // Открытие модального окна
-openModalBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-        console.log('Opening modal');
-        modal.classList.add('open'); // Добавляем класс для анимации
-        modalOverlay.style.opacity = '1'; // Делаем оверлей видимым
-        modalOverlay.style.visibility = 'visible'; // Делаем оверлей видимым
-
-        // Убираем класс closing, если он был добавлен
-        modal.classList.remove('closing');
-        setTimeout(() => {
-            modalOverlay.style.transition = 'opacity 0.4s ease'; // Задержка анимации для оверлея
-        }, 800); // Ждем окончания анимации модального окна
-    });
-});
-
-// Закрытие модального окна
-closeModalBtn.addEventListener('click', () => {
-    console.log('Closing modal');
-    modal.classList.add('closing'); // Добавляем класс для анимации закрытия
-    modalOverlay.style.transition = 'opacity 0.4s ease'; // Плавно исчезает
-    modalOverlay.style.opacity = '0'; // Оверлей исчезает
-
-    setTimeout(() => {
-        modal.classList.remove('open'); // Убираем класс открытия
-        modal.classList.remove('closing'); // Сбрасываем класс закрытия
-        modalOverlay.style.visibility = 'hidden'; // Скрываем оверлей
-    }, 800); // Задержка для завершения анимации
-});
-
-
-
-
-// Закрытие модального окна при клике за пределы окна
-window.addEventListener('click', (event) => {
-    if (event.target === modalOverlay) {
-        modal.classList.add('closing'); // Добавляем класс для анимации закрытия
-        modalOverlay.style.opacity = '0'; // Оверлей исчезает
-        modalOverlay.style.visibility = 'hidden'; // Скрываем оверлей
-        setTimeout(() => {
-            modal.classList.remove('open'); // Убираем класс после анимации
-        }, 800); // Задержка для завершения анимации
-    }
-});
-
-
-// Закрытие модального окна при клике за пределы окна
-window.addEventListener('click', (event) => {
-    if (event.target === modalOverlay) {
-        modal.classList.add('closing'); // Добавляем класс для анимации закрытия
-        modalOverlay.style.opacity = '0'; // Скрываем оверлей
-        modalOverlay.style.visibility = 'hidden'; // Скрываем оверлей
-        setTimeout(() => {
-            modal.classList.remove('open'); // Убираем класс после анимации
-        }, 800); // Задержка для завершения анимации
-    }
-});
-
-
-
-window.addEventListener("load", function () {
-    const bgWrapper = document.querySelector('.text');
-    bgWrapper.classList.add('visible'); // Добавляем класс для начала анимации
-
-    document.getElementById('menuButton').addEventListener('click', function () {
-        const mobileMenu = document.getElementById('mobileMenu');
-        mobileMenu.classList.toggle('visible'); // Добавляем/удаляем класс видимости
+if (openModalBtns.length > 0 && modal && modalOverlay) {
+    openModalBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            console.log('Opening modal');
+            modal.classList.add('open'); // Добавляем класс для анимации
+            modalOverlay.style.opacity = '1'; // Делаем оверлей видимым
+            modalOverlay.style.visibility = 'visible'; // Делаем оверлей видимым
+            modal.classList.remove('closing');
+            setTimeout(() => {
+                modalOverlay.style.transition = 'opacity 0.4s ease'; // Задержка анимации для оверлея
+            }, 800);
+        });
     });
 
-});
+    // Закрытие модального окна
+    if (closeModalBtn) {
+        closeModalBtn.addEventListener('click', () => {
+            console.log('Closing modal');
+            modal.classList.add('closing');
+            modalOverlay.style.transition = 'opacity 0.4s ease';
+            modalOverlay.style.opacity = '0';
 
+            setTimeout(() => {
+                modal.classList.remove('open');
+                modal.classList.remove('closing');
+                modalOverlay.style.visibility = 'hidden';
+            }, 800);
+        });
+    }
 
-const textElements = document.querySelectorAll('.typing-text'); // Выбираем все элементы с классом typing-text
+    // Закрытие модального окна при клике за пределы окна
+    window.addEventListener('click', (event) => {
+        if (event.target === modalOverlay) {
+            modal.classList.add('closing');
+            modalOverlay.style.opacity = '0';
+            modalOverlay.style.visibility = 'hidden';
+            setTimeout(() => {
+                modal.classList.remove('open');
+            }, 800);
+        }
+    });
+}
 
+// Анимация набора текста
+const textElements = document.querySelectorAll('.typing-text');
 textElements.forEach(textElement => {
     const text = textElement.textContent;
     textElement.textContent = '';
@@ -85,16 +90,13 @@ textElements.forEach(textElement => {
 
     function type() {
         if (index < text.length) {
-            const span = document.createElement('span'); // Создаем элемент span для каждой буквы
-            span.textContent = text.charAt(index); // Устанавливаем текст
-            textElement.appendChild(span); // Добавляем span к элементу
-
-            // Используем requestAnimationFrame для плавного появления
-
+            const span = document.createElement('span');
+            span.textContent = text.charAt(index);
+            textElement.appendChild(span);
             index++;
-            setTimeout(type, 80); // Установите задержку между буквами
+            setTimeout(type, 80);
         } else {
-            textElement.classList.add('visible'); // Добавляем класс видимости после окончания печати
+            textElement.classList.add('visible');
         }
     }
 
@@ -104,10 +106,18 @@ textElements.forEach(textElement => {
 
         if (scrollPosition > elementPosition) {
             textElement.classList.remove('hidden');
-            type(); // Начинаем печатать
+            type();
             window.removeEventListener('scroll', handleScroll);
         }
     };
 
     window.addEventListener('scroll', handleScroll);
+});
+
+
+window.addEventListener('load', () => {
+    const textElement = document.querySelector('.text');
+    if (textElement) {
+        textElement.classList.add('visible');
+    }
 });
