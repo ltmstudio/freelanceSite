@@ -195,6 +195,11 @@
     .card-swiper {
         height: auto;
         margin-bottom: $margin-1;
+        pointer-events: none;
+    }
+
+    .swiper-container-free-mode {
+        pointer-events: none;
     }
 
     .swiper-container-free-mode > .swiper-wrapper,
@@ -265,7 +270,7 @@
         width: 75px;
         height: 75px;
         margin-right: $padding-16;
-        img{
+        img {
             width: 100%;
             height: auto;
             object-fit: cover;
@@ -398,6 +403,11 @@
     visibility: hidden;
     z-index: 99999; /* Задаем высокий индекс, чтобы оверлей был выше всего */
     transition: opacity 0.4s ease;
+    &.visible {
+        opacity: 1;
+        transform: translateY(0);
+        visibility: visible;
+    }
 }
 
 /* Модальное окно */
@@ -488,7 +498,7 @@
 /* Анимация появления */
 @keyframes fadeIn {
     0% {
-        opacity: 0;
+        opacity: 1;
     }
     100% {
         opacity: 1;
@@ -510,7 +520,7 @@
 /* Анимация исчезновения при закрытии */
 @keyframes fadeOut {
     0% {
-        opacity: 1;
+        opacity: 0;
     }
     100% {
         opacity: 0;
@@ -580,6 +590,83 @@
 
 .desktop-none {
     display: none;
+}
+
+.portfolio-modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-width: 600px;
+    background-color: white;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+
+    .portfolio-modal-content {
+        padding: 20px;
+        position: relative;
+    }
+    .portfolio-close-btn {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        font-size: 24px;
+        cursor: pointer;
+    }
+}
+
+.privacy-modal {
+    width: 80%;
+    height: 80vh;
+    background-color: $bg-color;
+    margin: auto;
+    padding: $margin-4 $big-text;
+    border-radius: 10px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0; /* Изначально скрыто */
+    visibility: hidden; /* Скрываем */
+    z-index: -1; /* Оно не будет видимым */
+
+    /* Применение анимаций при открытии */
+    &.open {
+        opacity: 1;
+        visibility: visible; /* Делаем его видимым */
+        z-index: 999999999; /* Повыше всех элементов */
+        animation:
+            fadeIn 1s ease-out,
+            slideIn 0.8s ease-in-out;
+    }
+
+    /* Анимация скрытия модального окна */
+    &.closing {
+        animation:
+            fadeOut 1s ease-out,
+            slideOut 0.8s ease-in-out;
+    }
+
+    .modal-title {
+        margin-bottom: $margin-2;
+        h2 {
+            font-size: clamp(3rem, 0rem + 3.3333vw, 5rem);
+            line-height: 1.1em;
+            font-weight: normal;
+        }
+    }
+    .privacy-heading {
+        font-size: $font-p;
+        margin-bottom: $margin-1;
+    }
+
+    .privacy-subheading{
+        font-size: $mini-p;
+        font-family: $light-font;
+        margin-bottom: $margin-2;
+    }
 }
 
 @media (max-width: 991px) {
@@ -768,10 +855,15 @@
         height: 40vh;
         .card {
             .card-title {
-                font-size: 2.2rem;
+                font-size: 1.8rem;
             }
             .for-ben {
                 font-size: 1.2rem;
+            }
+            &:hover {
+                .card-title {
+                    font-size: 1.6rem;
+                }
             }
         }
     }
@@ -824,7 +916,7 @@
         display: none;
     }
 
-    .modal {
+    .modal, .privacy-modal {
         height: 90vh;
         .modal-content {
             .form-wrapper {
@@ -835,6 +927,11 @@
             }
         }
     }
+
+    .privacy-modal{
+        overflow: auto;
+    }
+
     .form-row {
         width: 100%;
     }
@@ -856,7 +953,7 @@
     }
 
     .review-card {
-        .photo{
+        .photo {
             display: block;
         }
         .author {

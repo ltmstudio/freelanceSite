@@ -242,7 +242,6 @@
                                 <div class></div>
                             </div>
                         @endforeach
-
                     </div>
                 </div>
                 <div class="container">
@@ -258,11 +257,13 @@
                                     </div>
                                     <div class="contact-item">
                                         <div class="title">SOCIAL</div>
-                                        <div class="desc"><a href="https://linkedin.com/company/lebizli-tehnologiya-merkezi" target="_blank">Linkedin</a></div>
+                                        <div class="desc"><a
+                                                href="https://linkedin.com/company/lebizli-tehnologiya-merkezi"
+                                                target="_blank">Linkedin</a></div>
                                     </div>
                                     <div class="contact-item">
                                         <div class="title">LEGAL</div>
-                                        <div class="desc"><a>Policy request</a></div>
+                                        <div class="desc" id="policyRequestLink"><a>Privacy</a></div>
                                     </div>
                                 </div>
                             </div>
@@ -294,6 +295,14 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+            <div id="portfolioModal" class="portfolio-modal" style="display: none;">
+                <div class="portfolio-modal-content">
+                    <span class="portfolio-close-btn" id="portfolioCloseBtn">&times;</span>
+                    <div class="portfolio-modal-body">
+                        <img id="portfolioModalImage" src="" alt="Portfolio Image" style="width: 100%;">
                     </div>
                 </div>
             </div>
@@ -336,6 +345,37 @@
                     </div>
                 </div>
             </div>
+            <div class="modal-overlay" id="privacyModalOverlay"></div>
+            <div id="privacyModal" class="privacy-modal">
+                <div class="modal-content">
+                    <div class="modal-title flex content-between align-center">
+                        <h2>Privacy Policy</h2>
+                        <div id="closePrivacyModal" class="close-btn"><span>&times;</span></div>
+                    </div>
+                    <p class="privacy-heading">1. Data Collection</p>
+                    <p class="privacy-subheading">We collect personal data such as name, email, and phone number to
+                        provide better services and enhance user experience.</p>
+
+                    <p class="privacy-heading">2. Use of Information</p>
+                    <p class="privacy-subheading">Collected data is used for communication, customer support, and
+                        service improvement.</p>
+
+                    <p class="privacy-heading">3. Data Sharing</p>
+                    <p class="privacy-subheading">We do not share your personal data with third parties unless required
+                        by law or with your explicit consent.</p>
+
+                    <p class="privacy-heading">4. Security Measures</p>
+                    <p class="privacy-subheading">We implement robust security measures to protect your data from
+                        unauthorized access and breaches.</p>
+
+                    <p class="privacy-heading">5. User Rights</p>
+                    <p class="privacy-subheading">You have the right to access, update, or request the deletion of your
+                        personal data at any time.</p>
+
+                    <p class="privacy-subheading">For further questions or concerns, please contact us.</p>
+
+                </div>
+            </div>
         </div>
     </scrollbar>
     {{-- <script src="{{ asset('/assets/js/smooth-scrollbar.js') }}"></script> --}}
@@ -361,6 +401,19 @@
             },
 
         };
+        const swiperContainer = document.querySelector('.swiper-container');
+
+        swiperContainer.addEventListener('click', (e) => {
+            swiper1.autoplay.stop(); // Останавливаем автоплей
+        });
+
+        // Перезапускаем автоплей через определенное время после клика
+        swiperContainer.addEventListener('click', (e) => {
+            setTimeout(() => {
+                swiper1.autoplay.start(); // Перезапуск автоплея через короткое время
+            }, 100); // Задержка, чтобы перезапустить автоплей
+        });
+
 
         // Инициализация первого слайдера
         var swiper1 = new Swiper(".swiper-container-free-mode", swiperOptions);
@@ -405,7 +458,7 @@
             },
         }
 
-        var swiper2 = new Swiper(".card-swiper", cardSwiperOptions);
+        var swiper3 = new Swiper(".card-swiper", cardSwiperOptions);
     </script>
 </body>
 
